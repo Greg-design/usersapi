@@ -7,7 +7,7 @@ namespace UsersApi.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class UsersController : Controller
+    public class UsersController : ControllerBase
     {
         private readonly UsersApiDBContext _context;
 
@@ -18,11 +18,14 @@ namespace UsersApi.Controllers
 
         // GET: api/users - Listar todos os usuários
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<User>>> GetUsers()
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<User>))]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> GetUsers()
         {
             try
             {
-                return await _context.User.ToListAsync();
+                var users = await _context.User.ToListAsync();
+                return Ok(users);
             }
             catch (Exception ex)
             {
@@ -32,7 +35,10 @@ namespace UsersApi.Controllers
 
         // GET: api/users/{id} - Buscar um usuário pelo ID
         [HttpGet("{id}")]
-        public async Task<ActionResult<User>> GetUser(Guid id)
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(User))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> GetUser([FromRoute] Guid id)
         {
             try
             {
@@ -43,7 +49,7 @@ namespace UsersApi.Controllers
                     return NotFound(new { message = "Usuário não encontrado." });
                 }
 
-                return user;
+                return Ok(user);
             }
             catch (Exception ex)
             {
@@ -53,7 +59,10 @@ namespace UsersApi.Controllers
 
         // POST: api/users - Criar um novo usuário
         [HttpPost]
-        public async Task<ActionResult<User>> CreateUser(User user)
+        [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(User))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> CreateUser([FromBody] User user)
         {
             try
             {
@@ -81,7 +90,11 @@ namespace UsersApi.Controllers
 
         // PUT: api/users/{id} - Atualizar um usuário existente
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateUser(Guid id, User updatedUser)
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> UpdateUser([FromRoute] Guid id, [FromBody] User updatedUser)
         {
             try
             {
@@ -118,10 +131,6 @@ namespace UsersApi.Controllers
                 }
                 throw;
             }
-            catch (DbUpdateException ex)
-            {
-                return StatusCode(500, new { message = "Erro ao atualizar usuário no banco de dados", error = ex.Message });
-            }
             catch (Exception ex)
             {
                 return StatusCode(500, new { message = "Erro ao atualizar usuário", error = ex.Message });
@@ -130,7 +139,10 @@ namespace UsersApi.Controllers
 
         // DELETE: api/users/{id} - Remover um usuário
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUser(Guid id)
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> DeleteUser([FromRoute] Guid id)
         {
             try
             {
@@ -144,10 +156,6 @@ namespace UsersApi.Controllers
                 await _context.SaveChangesAsync();
 
                 return NoContent();
-            }
-            catch (DbUpdateException ex)
-            {
-                return StatusCode(500, new { message = "Erro ao excluir usuário do banco de dados", error = ex.Message });
             }
             catch (Exception ex)
             {

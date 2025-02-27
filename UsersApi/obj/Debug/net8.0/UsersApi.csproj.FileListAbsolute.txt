@@ -165,7 +165,4 @@ C:\Users\Gregory de Souza\Desktop\projetos\UsersApi\UsersApi\bin\Debug\net8.0\ru
 C:\Users\Gregory de Souza\Desktop\projetos\UsersApi\UsersApi\bin\Debug\net8.0\runtimes\win-arm64\native\e_sqlite3.dll
 C:\Users\Gregory de Souza\Desktop\projetos\UsersApi\UsersApi\bin\Debug\net8.0\runtimes\win-x64\native\e_sqlite3.dll
 C:\Users\Gregory de Souza\Desktop\projetos\UsersApi\UsersApi\bin\Debug\net8.0\runtimes\win-x86\native\e_sqlite3.dll
-C:\Users\Gregory de Souza\Desktop\projetos\UsersApi\UsersApi\bin\Debug\net8.0\frontend\package-lock.json
-C:\Users\Gregory de Souza\Desktop\projetos\UsersApi\UsersApi\bin\Debug\net8.0\frontend\package.json
-C:\Users\Gregory de Souza\Desktop\projetos\UsersApi\UsersApi\bin\Debug\net8.0\frontend\public\manifest.json
-C:\Users\Gregory de Souza\Desktop\projetos\UsersApi\UsersApi\bin\Debug\net8.0\frontend\tsconfig.json
+C:\Users\Gregory de Souza\Desktop\projetos\UsersApi\UsersApi\obj\Debug\net8.0\UsersApi.sourcelink.json
